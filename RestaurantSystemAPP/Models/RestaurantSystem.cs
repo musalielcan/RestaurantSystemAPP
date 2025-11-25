@@ -71,7 +71,6 @@ namespace RestaurantSystemAPP.Models
         }
         #endregion
 
-
         #region AdminFlow
         static void AdminFlow()
         {
