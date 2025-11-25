@@ -13,6 +13,7 @@ namespace RestaurantSystemAPP.Models
         public Guid Id { get; } = Guid.NewGuid();
         public decimal Amount { get; set; }
         public PaymentType Type { get; set; }
+        public string Address { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
     }
 }

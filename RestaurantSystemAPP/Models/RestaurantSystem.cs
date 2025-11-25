@@ -57,7 +57,7 @@ namespace RestaurantSystemAPP.Models
 
         static void SeedIntro()
         {
-            Console.WriteLine($"Xoş gəlmisiniz! Restoran: {InMemoryDatabase.Restaurant.Name} | Balans: {InMemoryDatabase.Restaurant.Balance:C}");
+            Console.WriteLine($"Xoş gəlmisiniz! Restoran: {InMemoryDatabase.Restaurant.Name}");
         }
 
         static void ShowMainMenu()
@@ -87,7 +87,7 @@ namespace RestaurantSystemAPP.Models
                 Console.WriteLine("3 - Userleri idare et");
                 Console.WriteLine("4 - Menyunu goster");
                 Console.WriteLine("5 - Restoran balansini goster");
-                Console.WriteLine("6 - Depozitsiz masa rezerv et");
+                Console.WriteLine("6 - Masa rezerv et");
                 Console.WriteLine("0 - Esas menyuya qayit");
                 Console.Write("Secim: ");
                 var ch = Console.ReadLine()?.Trim();
@@ -1305,6 +1305,9 @@ namespace RestaurantSystemAPP.Models
                 return;
             }
 
+            Console.Write("Unvani daxil edin: ");
+            string address=Console.ReadLine();
+
             decimal total = order.Items.Sum(i => i.Item.Price * i.Quantity);
             Console.WriteLine($"Umumi mebleg: {total:C}");
 
@@ -1345,7 +1348,7 @@ namespace RestaurantSystemAPP.Models
 
             if (isPayment)
             {
-                var payment = new Payment { Amount = total, Type = Enum.Parse<PaymentType>(method) };
+                var payment = new Payment { Amount = total, Address=address, Type = Enum.Parse<PaymentType>(method) };
                 order.Payment = payment;
                 InMemoryDatabase.Restaurant.Orders.Add(order);
 
@@ -1366,7 +1369,7 @@ namespace RestaurantSystemAPP.Models
 
             foreach (var o in orders)
             {
-                Console.WriteLine($"\nSifaris ID: {o.Id} | Tarix: {o.CreatedAt} | Umumi: {o.Payment.Amount:C} | Odenis usulu: {o.Payment.Type}");
+                Console.WriteLine($"\nSifaris ID: {o.Id} | Tarix: {o.CreatedAt} | Umumi: {o.Payment.Amount:C} | Odenis usulu: {o.Payment.Type} | Adres: {o.Payment.Address}");
                 foreach (var item in o.Items)
                     Console.WriteLine($" - {item.Item.Name} x{item.Quantity} - {item.Item.Price:C} her biri");
             }
